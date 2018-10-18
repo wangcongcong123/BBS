@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<constant
+		name="struts.enable.DynamicMethodInvocation"
+		value="false" />
+	<constant
+		name="struts.devMode"
+		value="true" />
+	<package
+		name="default"
+		namespace="/"
+		extends="json-default">
+		<!-- 定义新的拦截器栈 -->
+		<interceptors>
+			<interceptor-stack name="bbsStack">
+				<interceptor-ref name="paramsPrepareParamsStack">
+					<param name="prepare.alwaysInvokePrepare">false</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="bbsStack"></default-interceptor-ref>
+		<action
+			name="user-*"
+			class="userAction"
+			method="{1}">
+			<result name="granted">main.jsp</result>
+			<result name="faceRecoSucc">verifySuccess.jsp</result>
+			<result name="faceRecoError">verifyError.jsp</result>
+			<result name="creditHistory">memberLevel.jsp</result>
+			<result name="extraInfo">userinfo.jsp</result>
+			<result name="avatarChanged">userinfo.jsp</result>
+			<result name="refused">login.jsp?state=1</result>
+			<result name="register">login.jsp</result>
+			<result name="adminInfo">admin-news.jsp</result>
+			<result name="setRecomFreq">setRecomTest.jsp</result>
+			<result
+				name="changeSucceed"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result name="adminLoginSuccess">admin.jsp</result>
+			<result name="adminWeChatLogin">loginViaWeChat.jsp</result>
+			<result name="adminBooks">admin-book.jsp</result>
+			<result name="userChart">user-chart.jsp</result>
+			<result name="bookChart">book-chart.jsp</result>
+			<result name="commentChart">comment-chart.jsp</result>
+			<result name="adminListRecords">borrow-details.jsp</result>
+			<result name="adminListComments">admin-comments.jsp</result>
+			<result name="adminListReservations">book-reservation.jsp</result>
+			<result name="adminUsers">admin-users.jsp</result>
+			<result name="adminLoginFail">admin-login.jsp</result>
+			<result name="qrCodeSucceed">qrCode.jsp</result>
+			<result name="qrCodeFail">user-login</result>
+			<result name="settings">settings.jsp</result>
+			<result name="favorite">favorite.jsp</result>
+			<result
+				name="paySucceed"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result
+				name="adminScanUser"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result
+				name="adminBorrow"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result
+				name="adminReturn"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result
+				name="adminConfirmBorrow"
+				type="json">
+			</result>
+			<result
+				name="adminConfirmReturn"
+				type="json">
+			</result>
+			<result
+				name="initialAPI"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result
+				name="payState"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result
+				name="showQrCode"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result
+				name="adminUsersAjax"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result
+				name="adminUsersAjaxArea"
+				type="json">
+				<param name="root">status</param>
+			</result>
+		
+			<result
+				name="adminLogout"
+				type="json">
+				<param name="root">status</param>
+			</result>
+			<result name="logout">login.jsp</result>
+		</action>
+		<action
+			name="reservation-*"
+			class="reservationAction"
+			method="{1}">
+			<result
+				name="reserve"
+				type="json">
+				<param name="root">reserveMap</param>
+			</result>
+			<result
+				name="cancel"
+				type="json">
+				<param name="root">reserveMap</param>
+			</result>
+			<result
+				name="pushed"
+				type="json">
+			</result>
+			<result name="checkReservationList"></result>
+			<result name="reservelist">reservelist.jsp</result>
+		</action>
+		<action
+			name="au-*"
+			class="authorizationAction"
+			method="{1}">
+			<result
+				name="adminLogin"
+				type="json">
+				authoMap
+			</result>
+			<result name="adminLoginSucceed">login-confirm.jsp</result>
+			<result name="notRegistered">login-notRegistered.jsp</result>
+			<result name="notAdmin">login-notAdmin.jsp</result>
+			<result name="newMember">register.jsp</result>
+			<result name="success">temp.jsp</result>
+			<result name="exist">temp.jsp</result>
+			<result name="error">login.jsp</result>
+		</action>
+		<action
+			name="searchHistory-*"
+			class="searchHistoryAction"
+			method="{1}">
+			<result name="search">booklist.jsp</result>
+			<result
+				name="bookSearch"
+				type="json">
+				<param name="root">books</param>
+			</result>
+			<result
+				name="showComments"
+				type="json">
+				<param name="root">books</param>
+			</result>
+			<result name="checkSearchHistory">searchHistory.jsp</result>
+		</action>
+		<action
+			name="comment-*"
+			class="commentAction"
+			method="{1}">
+			<result
+				name="deleteComment"
+				type="json">
+				<param name="root">commentStatus</param>
+			</result>
+			<result
+				name="adminCommentsAjax"
+				type="json">
+				<param name="root">commentStatus</param>
+			</result>
+			<result
+				name="comment"
+				type="json">
+				<param name="root">commentStatus</param>
+			</result>
+		</action>
+		<action
+			name="book-*"
+			class="bookAction"
+			method="{1}">
+			<result name="bookDetails">book.jsp</result>
+			<result name="adminBookDetail">admin-bookinfo.jsp</result>
+			<result name="bookList">booklist.jsp</result>
+			<result name="refused">login.jsp</result>
+			<result
+				name="adminBooksAjax"
+				type="json">
+				<param name="root">books</param>
+			</result>
+			<result
+				type="json"
+				name="listBooks">
+				<param name="root">books</param>
+			</result>
+			<result
+				name="showComments"
+				type="json">
+				<param name="root">books</param>
+			</result>
+			<result
+				name="addBook"
+				type="json">
+				<param name="root">books</param>
+			</result>
+			<result
+				name="bookAjax"
+				type="json">
+				<param name="root">books</param>
+			</result>
+			<result name="bookSubmit">booksubmit.jsp</result>
+		</action>
+		<action
+			name="item-*"
+			class="bookItemAction"
+			method="{1}">
+			<result
+				name="AvaSucceed"
+				type="json">
+				<param name="root">map</param>
+			</result>
+		</action>
+
+		<action
+			name="borrowedRecord-*"
+			class="borrowedRecordAction"
+			method="{1}">
+			<result name="checkBorrowedRecord">borrowhistory.jsp</result>
+			<result name="borrowlist">borrowlist.jsp</result>
+			<result
+				type="json"
+				name="createRecord">
+				<param name="root">borrowedMap</param>
+			</result>
+			<result
+				type="json"
+				name="cancel">
+				<param name="root">borrowedMap</param>
+			</result>
+			<result
+				type="json"
+				name="remained">
+				<param name="root">borrowedMap</param>
+			</result>
+			<result name="refused">login.jsp</result>
+			<result name="borrowHistory">borrowhistory.jsp</result>
+		</action>
+		<action name="setting-*" class="settingAction" method="{1}">
+			<result
+				type="json"
+				name="settingAjax">
+				<param name="root">settingStatus</param>
+			</result>
+			<result name="loginFail">admin-login.jsp</result>
+			<result name="settings">admin-settings.jsp</result>
+		</action>
+	</package>
+
+</struts>
